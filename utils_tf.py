@@ -111,15 +111,17 @@ def create_modelcheckpoint_callback(experiment_name, dir_name="model_checkpoints
 def history_plot(history, metric="accuracy"):
     epoch_count = range(1, len(history.history[metric]) + 1)
     plt.plot(epoch_count,  history.history[metric], label='train')
-    if "val_accuracy" in history.history:
-        plt.plot(epoch_count,  history.history['val_' + metric], label='val')
+    val_metric = 'val_' + metric
+    if val_metric in history.history:
+        plt.plot(epoch_count,  history.history[val_metric], label='val')
     plt.legend()
     plt.show()
 
-def history_fine_tune_plot(history, history_ft):
-    initial_epochs = len(history.history['accuracy'])
-    acc = history.history['accuracy'] + history_ft.history['accuracy']
-    val = history.history['val_accuracy'] + history_ft.history['val_accuracy']
+def history_fine_tune_plot(history, history_ft, metric="accuracy"):
+    val_metric = 'val_' + metric
+    initial_epochs = len(history.history[metric])
+    acc = history.history[metric] + history_ft.history[metric]
+    val = history.history[val_metric] + history_ft.history[val_metric]
 
     epoch_count = range(1, len(acc) + 1)
     plt.plot(epoch_count,  acc, label='train')
