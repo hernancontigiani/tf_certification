@@ -108,11 +108,11 @@ def create_modelcheckpoint_callback(experiment_name, dir_name="model_checkpoints
                                     )
     return checkpoint_callback
 
-def history_plot(history):
-    epoch_count = range(1, len(history.history['accuracy']) + 1)
-    plt.plot(epoch_count,  history.history['accuracy'], label='train')
+def history_plot(history, metric="accuracy"):
+    epoch_count = range(1, len(history.history[metric]) + 1)
+    plt.plot(epoch_count,  history.history[metric], label='train')
     if "val_accuracy" in history.history:
-        plt.plot(epoch_count,  history.history['val_accuracy'], label='val')
+        plt.plot(epoch_count,  history.history['val_' + metric], label='val')
     plt.legend()
     plt.show()
 
