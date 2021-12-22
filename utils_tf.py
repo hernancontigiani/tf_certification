@@ -133,8 +133,14 @@ def history_fine_tune_plot(history, history_ft, metric="accuracy"):
 
 def unbatch_test_dataset(test_data):
     y_test = []
-    for images, labels in test_data.unbatch():
-        y_test.append(labels.numpy().argmax())
+    for images, labels in test_ds.unbatch():
+        if len(labels.shape) > 0:
+	    # multicategorical
+            val = labels.numpy().argmax()
+        else:
+	    # binary category
+            val = labels.numpy()
+        y_test.append(val)
     return y_test
 
 def evaluate_classification(y_true, y_pred):    
@@ -142,7 +148,7 @@ def evaluate_classification(y_true, y_pred):
     if max(y_true) > 1: # multi categorical
         f1 = f1_score(y_true, y_pred, average="weighted")
     else:
-        f1_score(y_true, y_pred)
+        f1 = f1_score(y_true, y_pred)
 
     return {"accuracy": acc, "f1_score": f1 }
 
