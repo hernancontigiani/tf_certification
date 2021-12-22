@@ -133,7 +133,7 @@ def history_fine_tune_plot(history, history_ft, metric="accuracy"):
 
 def unbatch_test_dataset(test_data):
     y_test = []
-    for images, labels in test_ds.unbatch():
+    for images, labels in test_data.unbatch():
         if len(labels.shape) > 0:
 	    # multicategorical
             val = labels.numpy().argmax()
