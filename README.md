@@ -1,3 +1,5 @@
+![banner](/images/hc_banner.png)
+
 # Tensorflow Developer Certificate practice
 
 Notebooks used for pratice the main topics of the certification:
